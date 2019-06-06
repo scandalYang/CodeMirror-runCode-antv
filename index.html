@@ -5,18 +5,17 @@
     <meta charset="utf-8">
     <title>柱状图</title>
     <!-- 引入 G2 文件 -->
-    <script src="https://gw.alipayobjects.com/os/lib/antv/g2/3.4.10/dist/g2.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.8/f2.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.10.1/dist/data-set.min.js"></script>
-    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-    <script src="https://gw.alipayobjects.com/os/antv/assets/lib/codemirror-5.29.0/codemirror-merged.min.js"></script>
+    <script src="./js/g2.min.js"></script>
+    <script src="./js/data-set.min.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/codemirror-merged.min.js"></script>
     <script src="./js/xml.js"></script>
     <script src="./js/javascript.js"></script>
     <script>
 
     </script>
     <link rel="stylesheet"
-        href="https://gw.alipayobjects.com/os/antv/assets/lib/codemirror-5.29.0/codemirror-merged.min.css" />
+        href="./js/codemirror-merged.min.css" />
     <style>
         .all {
             width: 100%;
@@ -63,41 +62,6 @@
     <div class="all">
         <div class="block" id="c1"></div>
         <textarea id="script_once_code">
-
-                 <script>
-                    const list = [
-                        {
-                            name: 'a', list: [
-                                { month: '2-6', count: 12 },
-                                { month: '3-6', count: 22 },
-                                { month: '4-6', count: 32 },
-                                { month: '5-6', count: 2 },
-                                { month: '6-6', count: 22 },
-                                { month: '7-6', count: 32 },
-                                { month: '8-6', count: 72 },
-                            ],
-
-                        },
-                        {
-                            name: 'b', list: [
-                                { month: '2-6', count: 22 },
-                                { month: '3-6', count: 12 },
-                                { month: '4-6', count: 42 },
-                                { month: '5-6', count: 5 },
-                                { month: '6-6', count: 32 },
-                                { month: '7-6', count: 32 },
-                                { month: '8-6', count: 42 },
-                            ]
-                        }
-                    ]
-                    chart.clear();
-                    const ds = new DataSet();
-                    const dv = ds.createView().source(list[1].list);
-                    const sty = 'month*count';
-                    chart.source(dv);
-                    chart.interval().position(sty).color('month')
-                    chart.render();
-                </script>
             </textarea>
 
     </div>
