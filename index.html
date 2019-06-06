@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>柱状图</title>
+    <!-- 引入 G2 文件 -->
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g2/3.4.10/dist/g2.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.3.8/f2.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.10.1/dist/data-set.min.js"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/assets/lib/codemirror-5.29.0/codemirror-merged.min.js"></script>
+    <script src="./js/xml.js"></script>
+    <script src="./js/javascript.js"></script>
+    <script>
+
+    </script>
+    <link rel="stylesheet"
+        href="https://gw.alipayobjects.com/os/antv/assets/lib/codemirror-5.29.0/codemirror-merged.min.css" />
+    <style>
+        .all {
+            width: 100%;
+            float: left;
+        }
+
+        .block {
+            display: inline-block;
+            width: 50%;
+            height: 300px;
+        }
+
+        canvas {
+            width: 600px;
+            height: 300px;
+        }
+
+        .CodeMirror {
+            width: 50%;
+            height: auto;
+            float: right;
+        }
+
+        .btn {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 创建图表容器 -->
+    <button class="change" data="1">柱形分开1</button>
+    <button class="change" data="2">柱形分开2</button>
+    <button class="change" data="3">柱形合并1</button>
+    <button class="change" data="5">折线分开1</button>
+    <button class="change" data="6">折线分开2</button>
+    <button class="change" data="8">面积图</button>
+    <button class="change" data="7">折线合并</button>
+    <button class="change" data="9">饼图</button>
+    <button class="change" data="4">柱形合并2</button>
+    <button class="btn btn-primary" onclick="runCode()">运行</button>
+    <p>柱形分开</p>
+
+    <div class="all">
+        <div class="block" id="c1"></div>
+        <textarea id="script_once_code">
+
+                 <script>
+                    const list = [
+                        {
+                            name: 'a', list: [
+                                { month: '2-6', count: 12 },
+                                { month: '3-6', count: 22 },
+                                { month: '4-6', count: 32 },
+                                { month: '5-6', count: 2 },
+                                { month: '6-6', count: 22 },
+                                { month: '7-6', count: 32 },
+                                { month: '8-6', count: 72 },
+                            ],
+
+                        },
+                        {
+                            name: 'b', list: [
+                                { month: '2-6', count: 22 },
+                                { month: '3-6', count: 12 },
+                                { month: '4-6', count: 42 },
+                                { month: '5-6', count: 5 },
+                                { month: '6-6', count: 32 },
+                                { month: '7-6', count: 32 },
+                                { month: '8-6', count: 42 },
+                            ]
+                        }
+                    ]
+                    chart.clear();
+                    const ds = new DataSet();
+                    const dv = ds.createView().source(list[1].list);
+                    const sty = 'month*count';
+                    chart.source(dv);
+                    chart.interval().position(sty).color('month')
+                    chart.render();
+                </script>
+            </textarea>
+
+    </div>
+
+    <!--show为存放动态code-->
+    <div class="show"></div>
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("script_once_code"), {
+            mode: "text/html",
+            styleActiveLine: true,
+            lineNumbers: true,
+            lineWrapping: true
+        });
+        var flag = true;
+        var chart = new G2.Chart({
+            container: 'c1', // 指定图表容器 ID
+            forceFit: true,
+        });
+        function runCode() {
+            $(".show").html(editor.getValue());
+        }
+        let str = '';
+        //C1、C2...为具体业务，只用看一个例子
+        $(".change").on("click", function () {
+            let num = $(this).attr("data");
+            num = parseInt(num);
+            switch (num) {
+                case 1:
+                window.location.reload()
+                    C1();
+                    break;
+                case 2:
+                    C2();
+                    break;
+                case 3:
+                    C3();
+                    break;
+                case 4:
+                    C4();
+                    break;
+                case 5:
+                    C5();
+                    break;
+                case 6:
+                    C6();
+                    break;
+                case 7:
+                    C7();
+                    break;
+                case 8:
+                    C8();
+                    break;
+                case 9:
+                    C9();
+                    break;
+                default:
+
+                    break;
+            }
+        })
+        var _DataSet = DataSet,
+            DataView = _DataSet.DataView;
+        C1();
+        function C1() {
+            
+            editor.setValue(`<script>
+               if (!flag) {
+                        chart.clear();
+                    } else {
+                        flag = false;
+                    }
+                    const list = [
+                    {
+                        name: 'a', list: [
+                            { month: '2-6', count: 12 },
+                            { month: '3-6', count: 22 },
+                            { month: '4-6', count: 32 },
+                            { month: '5-6', count: 2 },
+                            { month: '6-6', count: 22 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 72 },
+                        ],
+
+                    },
+                    {
+                        name: 'b', list: [
+                            { month: '2-6', count: 22 },
+                            { month: '3-6', count: 12 },
+                            { month: '4-6', count: 42 },
+                            { month: '5-6', count: 5 },
+                            { month: '6-6', count: 32 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 42 },
+                        ]
+                    }
+                ]
+                    chart.clear();
+                    const ds = new DataSet();
+                    const dv = ds.createView().source(list[0].list);
+                    const sty = 'month*count';
+                    chart.source(dv);
+                    chart.interval().position(sty).color('month');
+                    chart.render();
+                    </scri${str}pt>`)
+            runCode();
+        }
+        function C2() {
+            editor.setValue(`
+            <script> const list = [
+                    {
+                        name: 'a', list: [
+                            { month: '2-6', count: 12 },
+                            { month: '3-6', count: 22 },
+                            { month: '4-6', count: 32 },
+                            { month: '5-6', count: 2 },
+                            { month: '6-6', count: 22 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 72 },
+                        ],
+
+                    },
+                    {
+                        name: 'b', list: [
+                            { month: '2-6', count: 22 },
+                            { month: '3-6', count: 12 },
+                            { month: '4-6', count: 42 },
+                            { month: '5-6', count: 5 },
+                            { month: '6-6', count: 32 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 42 },
+                        ]
+                    }
+                ]
+                chart.clear();
+                const ds = new DataSet();
+                const dv = ds.createView().source(list[1].list);
+                const sty = 'month*count';
+                chart.source(dv);
+                chart.interval().position(sty).color('month')
+                chart.render();
+            </scri${str}pt>`)
+            runCode();
+        }
+        function C3() {
+            editor.setValue(`
+                <script> const list = [
+                    {
+                        name: 'a', list: [
+                            { month: '2-6', count: 12 },
+                            { month: '3-6', count: 22 },
+                            { month: '4-6', count: 32 },
+                            { month: '5-6', count: 2 },
+                            { month: '6-6', count: 22 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 72 },
+                        ],
+
+                    },
+                    {
+                        name: 'b', list: [
+                            { month: '2-6', count: 22 },
+                            { month: '3-6', count: 12 },
+                            { month: '4-6', count: 42 },
+                            { month: '5-6', count: 5 },
+                            { month: '6-6', count: 32 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 42 },
+                        ]
+                    }
+                ]
+                    chart.clear();
+                    let getnew = doList(list);
+                    const ds = new DataSet();
+                    const dv = ds.createView().source(getnew);
+                    const sty = 'month*count';
+                    chart.source(dv);
+                    chart.axis('count', {
+                    label: {
+                    textStyle: {
+                    fill: '#aaaaaa'
+                    }
+                    },
+                    tickLine: {
+                    alignWithLabel: true,
+                    length: 0
+                    }
+                    });
+
+                    chart.interval().position(sty).color('name', ['#40a9ff', '#1890ff', '#096dd9', '#0050b3']).opacity(1);
+                    chart.render();
+            </scri${str}pt>`)
+            runCode();
+        }
+        function C4() {
+            editor.setValue(`
+            <script> const list = [
+                    {
+                        name: 'a', list: [
+                            { month: '2-6', count: 12 },
+                            { month: '3-6', count: 22 },
+                            { month: '4-6', count: 32 },
+                            { month: '5-6', count: 2 },
+                            { month: '6-6', count: 22 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 72 },
+                        ],
+
+                    },
+                    {
+                        name: 'b', list: [
+                            { month: '2-6', count: 22 },
+                            { month: '3-6', count: 12 },
+                            { month: '4-6', count: 42 },
+                            { month: '5-6', count: 5 },
+                            { month: '6-6', count: 32 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 42 },
+                        ]
+                    }
+                ]
+                chart.clear();
+                let getnew = doList(list);
+                const ds = new DataSet();
+                const dv = ds.createView().source(getnew);
+                const sty = 'month*count';
+                chart.source(dv);
+                chart.axis('count', {
+                position: 'right'
+                });
+                chart.axis('month', {
+                label: {
+                offset: 22
+                }
+                });
+                chart.coord().transpose().scale(1, -1);
+                chart.interval().position(sty).color('name').adjust([{
+                type: 'dodge',
+                marginRatio: 1 / 32
+                }]);
+                chart.render();
+                </scri${str}pt>`)
+            runCode();
+        }
+        function C5() {
+            editor.setValue(`
+            <script> const list = [
+                    {
+                        name: 'a', list: [
+                            { month: '2-6', count: 12 },
+                            { month: '3-6', count: 22 },
+                            { month: '4-6', count: 32 },
+                            { month: '5-6', count: 2 },
+                            { month: '6-6', count: 22 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 72 },
+                        ],
+
+                    },
+                    {
+                        name: 'b', list: [
+                            { month: '2-6', count: 22 },
+                            { month: '3-6', count: 12 },
+                            { month: '4-6', count: 42 },
+                            { month: '5-6', count: 5 },
+                            { month: '6-6', count: 32 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 42 },
+                        ]
+                    }
+                ]
+                chart.clear();
+                const ds = new DataSet();
+                const dv = ds.createView().source(list[0].list);
+                const sty = 'month*count';
+                chart.source(dv);
+                chart.line().position(sty);
+
+                chart.point().position(sty).size(4).shape('circle').style({
+                stroke: '#fff',
+                lineWidth: 1
+                });
+                chart.render();
+                </scri${str}pt>`)
+            runCode();
+        }
+        function C6() {
+            editor.setValue(`
+            <script> const list = [
+                    {
+                        name: 'a', list: [
+                            { month: '2-6', count: 12 },
+                            { month: '3-6', count: 22 },
+                            { month: '4-6', count: 32 },
+                            { month: '5-6', count: 2 },
+                            { month: '6-6', count: 22 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 72 },
+                        ],
+
+                    },
+                    {
+                        name: 'b', list: [
+                            { month: '2-6', count: 22 },
+                            { month: '3-6', count: 12 },
+                            { month: '4-6', count: 42 },
+                            { month: '5-6', count: 5 },
+                            { month: '6-6', count: 32 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 42 },
+                        ]
+                    }
+                ]
+                chart.clear();
+                const ds = new DataSet();
+                const dv = ds.createView().source(list[1].list);
+                const sty = 'month*count';
+                chart.source(dv);
+                chart.line().position(sty);
+                chart.point().position(sty).size(4).shape('circle').style({
+                stroke: '#fff',
+                lineWidth: 1
+                });
+                chart.render();
+            </scri${str}pt>`)
+            runCode();
+        }
+        function C7() {
+            editor.setValue(`
+            <script> const list = [
+                    {
+                        name: 'a', list: [
+                            { month: '2-6', count: 12 },
+                            { month: '3-6', count: 22 },
+                            { month: '4-6', count: 32 },
+                            { month: '5-6', count: 2 },
+                            { month: '6-6', count: 22 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 72 },
+                        ],
+
+                    },
+                    {
+                        name: 'b', list: [
+                            { month: '2-6', count: 22 },
+                            { month: '3-6', count: 12 },
+                            { month: '4-6', count: 42 },
+                            { month: '5-6', count: 5 },
+                            { month: '6-6', count: 32 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 42 },
+                        ]
+                    }
+                ]
+            chart.clear();
+            let data = doList(list);
+            const sty = 'month*count';
+            var ds = new DataSet();
+            var dv = ds.createView().source(data);
+            chart.source(dv, {
+            month: {
+            range: [0, 1]
+            }
+            });
+            chart.tooltip({
+            crosshairs: {
+            type: 'line'
+            }
+            });
+            chart.axis('name', {
+            label: {
+            formatter: function formatter(val) {
+            return val + '°C';
+            }
+            }
+            });
+
+            chart.line().position(sty).color('name').shape('smooth');
+            chart.point().position(sty).color('name').size(4).shape('circle').style({
+            stroke: '#fff',
+            lineWidth: 1
+            });
+            chart.render();
+            </scri${str}pt>`)
+            runCode();
+        }
+        function C8() {
+            editor.setValue(`
+            <script> const list = [
+                    {
+                        name: 'a', list: [
+                            { month: '2-6', count: 12 },
+                            { month: '3-6', count: 22 },
+                            { month: '4-6', count: 32 },
+                            { month: '5-6', count: 2 },
+                            { month: '6-6', count: 22 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 72 },
+                        ],
+
+                    },
+                    {
+                        name: 'b', list: [
+                            { month: '2-6', count: 22 },
+                            { month: '3-6', count: 12 },
+                            { month: '4-6', count: 42 },
+                            { month: '5-6', count: 5 },
+                            { month: '6-6', count: 32 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 42 },
+                        ]
+                    }
+                ]
+            chart.clear();
+            let data = doList(list);
+            const ds = new DataSet();
+            const dv = ds.createView().source(data);
+            const sty = 'month*count';
+            chart.source(dv);
+            chart.areaStack().position(sty).color('name');
+            chart.lineStack().position(sty).color('name').size(2);
+            chart.render();
+            </scri${str}pt>`)
+            runCode();
+        }
+        function C9() {
+            editor.setValue(`
+            <script> const list = [
+                    {
+                        name: 'a', list: [
+                            { month: '2-6', count: 12 },
+                            { month: '3-6', count: 22 },
+                            { month: '4-6', count: 32 },
+                            { month: '5-6', count: 2 },
+                            { month: '6-6', count: 22 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 72 },
+                        ],
+
+                    },
+                    {
+                        name: 'b', list: [
+                            { month: '2-6', count: 22 },
+                            { month: '3-6', count: 12 },
+                            { month: '4-6', count: 42 },
+                            { month: '5-6', count: 5 },
+                            { month: '6-6', count: 32 },
+                            { month: '7-6', count: 32 },
+                            { month: '8-6', count: 42 },
+                        ]
+                    }
+                ]
+            chart.clear();
+            let data = getpercent(list);
+            chart.source(data, {
+            percent: {
+            formatter: function formatter(val) {
+            val = val * 100 + '%';
+            return val;
+            }
+            }
+            });
+            chart.coord('theta', {
+            radius: 0.75
+            });
+            chart.tooltip({
+            showTitle: false,
+            itemTpl: '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
+            });
+            chart.intervalStack().position('percent').color('month').label('percent', {
+            formatter: function formatter(val, item) {
+            return item.point.month + ': ' + val;
+            }
+            }).tooltip('month*percent', function (item, percent) {
+            percent = percent * 100 + '%';
+            return {
+            name: item,
+            value: percent
+            };
+            }).style({
+            lineWidth: 1,
+            stroke: '#fff'
+            });
+            chart.render();
+            </scri${str}pt>`)
+            runCode();
+        }
+        function doList(list) {
+            let newdata = list;
+            let getnew = [];
+            newdata.forEach(element => {
+                element.list.map((item) => {
+                    item.name = element.name;
+                    getnew.push(item)
+                })
+            });
+            return getnew;
+        }
+        function getpercent(list) {
+            let data = list[0].list;
+            console.log(data);
+            let news = [];
+            let sum = 0;
+            data.forEach(element => {
+                sum += element.count;
+            })
+            data.forEach(element => {
+                let ele = {};
+                ele.month = element.month;
+                ele.percent = parseFloat((element.count / sum).toFixed(2));
+                news.push(ele);
+            })
+            return news;
+        }
+    </script>
+</body>
+
+</html>
