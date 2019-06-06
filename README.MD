@@ -1,4 +1,5 @@
-codemirror代码高亮显示，在线运行anty例子
+codemirror代码高亮显示，在线运行anty例子，在线预览：https://scandalyang.github.io/CodeMirror-runCode-antv/
+
 代码：
   <!-- 引入文件 -->
     <script src="./js/g2.min.js"></script>
